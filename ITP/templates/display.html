@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Service details</title>
+    <script type="text/javascript">
+   function searchName()
+            {
+                var input,table,tr,td,displayData,filter,i
+                input=document.getElementById("searchClientName");
+                filter = input.value.toUpperCase();
+                table=document.getElementById("table1");
+                tr=table.getElementsByTagName("tr");
+                for(i=0;i<tr.length;i++)
+                {
+                    td=tr[i].getElementsByTagName("td")[1];
+                    if(td)
+                    {
+                        displayData=td.innerText;
+                        if(displayData.toUpperCase().indexOf(filter)>-1)
+                        {
+                            tr[i].style.display="";
+
+                        }
+                        else
+                        {
+                            tr[i].style.display="none";
+                        }
+                    }
+                }
+            }
+
+    </script>
+     <style>
+
+            table,th,td{
+                padding:10px;
+                border: 1px solid white;
+
+            }
+            th{
+                background-color:black;
+                color:white;
+            }
+            td{
+                   background-color:#f1f1f1;
+            }
+            .a:link, .a:visited {
+            border-radius: 10px;
+             background-color: lightblue;
+             color: black;
+             padding: 7px 12px;
+             text-align: center;
+             text-decoration: none;
+              display: inline-block;
+            }
+
+            #view {
+              background-color: darkblue;
+              color: white;
+            }
+
+            #delete {
+              background-color: darkred;
+              color: white;
+            }
+            input[type=button], input[type=submit], input[type=reset] {
+              background-color: lightblue;
+              border: none;
+              color: black;
+              padding: 8px 16px;
+              text-decoration: none;
+              margin: 4px 2px;
+              cursor: pointer;
+              border-radius: 8px;
+            }
+            select ,input[type=text]{
+              width: 25%;
+              padding: 8px 10px;
+              border: none;
+              border-radius: 4px;
+              background-color: #f1f1f1;
+
+
+            }
+
+            .ul {
+              list-style-type: none;
+              left-margin: 200px;
+              padding: 0;
+              overflow: hidden;
+              background-color: lightblue;
+             }
+
+            .li {
+              float: left;
+            }
+
+            .li a {
+              display: block;
+              color: Black;
+              text-align: center;
+              padding: 20px 50px;
+              text-decoration: none;
+            }
+
+            .li a:hover:not(.active) {
+              background-color: #898A8A;
+            }
+
+            #active {
+              background-color: #f1f1f1;
+            }
+
+            .ul2 {
+              list-style-type: none;
+
+              padding: 0;
+              overflow: hidden;
+              background-color: lightblue;
+            }
+
+
+
+
+            .li2 a {
+              display: block;
+              color: Black;
+
+              padding: 20px 10px 10px 50px;
+              text-decoration: none;
+            }
+
+            .editbutton{
+                background-color: green;
+                color:white;
+            }
+            .deletebutton{
+                background-color: red;
+
+
+            }
+
+            .li2 a:hover:not(.active) {
+              background-color: #898A8A;
+            }
+
+            #active2 {
+              background-color: #f1f1f1;
+            }
+            .div2{
+                position: relative;
+                left: 0px;
+                top: 10px;
+                width:180px;
+
+
+
+            }
+
+        </style>
+</head>
+<body>
+
+
+        <ul class="ul">
+            <li class="li"><a href = "#"><b>Home</b></a></li>
+            <li class="li" id="active"><b><a href = "#">Display Service Details/Download PDF Service list/Update Service Records/Delete Service Records</a></b></li>
+			<li class="li"><a href = "#"><b>Logout</b></a></li>
+		</ul>
+
+
+        <div class="div2">
+            <ul class="ul2">
+            <li class="li"><a href = "#"><b>Customer Information</b></a></li>
+            <li class="li"><a href = "#"><b>Appointment Management</b></a></li>
+			<li class="li" ><a href = "#"><b>Work Progress Information</b></a></li>
+            <li class="li"><a href = "#"><b>Work Management Information</b></a></li>
+            <li class="li" id="active"><a href = "#"><b>Service List Management</b></a></li>
+            <li class="li"><a href = "#"><b>Invoice Preparation</b></a></li>
+            <li class="li"><b><a href = "#">Receipt Preparation</a></b></li>
+			<li class="li"><a href = "#"><b>Document Preparation</b></a></li>
+            </ul>
+        </div>
+        <br><br>
+
+
+        <div class="div" style="position: relative;left:250px;bottom:650px;width:1000px;height:500px;">
+
+
+        <center>
+            <input type="text"  id="searchClientName" placeholder="Enter Service name...." onkeyup="searchName();"/>
+        <table border="1" id="table1">
+            <tr>
+                <th style="width:100px">ID</th>
+                <th style="width:150px">Service Name</th>
+                <th style="width:130px">Charge</th>
+                <th style="width:130px">Category</th>
+                <th>Action</th>
+            </tr>
+
+            {% for displaycharge in ChargeInsert%}
+            <tr>
+                <td>{{displaycharge.id}}</td>
+                <td>{{displaycharge.servicename}}</td>
+                <td>{{displaycharge.charge}}</td>
+                <td>{{displaycharge.category}}</td>
+                <td><div class="editbutton"><form action="/edit/{{displaycharge.id}}"><input type="submit" value="EDIT" style="background-color: green; color:white;"/></form></div>
+                    <div class="deletebutton"><form action="/delete/{{displaycharge.id}}" onclick="return confirm('Are you sure you want to delete?')"><input type="submit" value="DELETE" style="background-color: red; color:white;"/></form></div></td>
+            </tr>
+            {% endfor %}
+        </table>
+        </center>
+            <center>
+            <form action="{% url 'Insertcharge'%}">
+            <input type="submit" value="ADD A SERVICE" style="background-color:limegreen; color:white;border-radius: 0px;"/>
+            </form>
+
+
+            <form action="{% url 'getpdfPage'%}">
+            <input type="submit" value="EXPORT PDF" style="background-color:orange; color:white;border-radius: 0px;float: right;"/>
+            </form>
+
+            </center>
+
+
+
+
+
+        </div>
+        <div style=" position: relative;width:100%;height:150px;bottom:500px;background-color: lightblue;right:0px;">
+
+            <div style="position:relative;left:30px;top:15px">
+                <p><br><b>Sumudu Prabha Atapattu</b><br>LL.B(Sri Lanka), Attorney-at-Law<br>Notary Public, Commissioner for Oaths <br>& Registered Company Secretary</p>
+            </div>
+
+            <div style="position:relative;left:500px;bottom:75px">
+                <p><br><b>Address : </b>No.275,Good Shead Road,Ratapura<br><b>Contact Number :</b> 0711567857<br><b>Fax : </b>0115756965
+            </div>
+
+            <div style="position:relative;left:1050px;bottom:150px">
+                <p>Legal Information System<br>All Right Reserved<br>Owned By Sumudu Prabha Atapattu</p>
+            </div>
+
+        </div>
+
+</body>
+</html>

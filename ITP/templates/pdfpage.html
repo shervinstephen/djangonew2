@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report</title>
+</head>
+<body>
+    <center>
+    <h2>SERVICE LIST</h2>
+    <table  border="0.5" id="table1" align="center" >
+            <tr style="height:30px">
+                <th style="width:100px">ID</th>
+                <th style="width:150px">Service Name</th>
+                <th style="width:130px">Charge</th>
+                <th style="width:130px">Category</th>
+
+            </tr>
+
+            {% for displaycharge in working%}
+            <tr style="height:30px">
+                <td>{{displaycharge.id}}</td>
+                <td>{{displaycharge.servicename}}</td>
+                <td>{{displaycharge.charge}}</td>
+                <td>{{displaycharge.category}}</td>
+                 </tr>
+            {% endfor %}
+        </table>
+        </center>
+
+
+
+
+                <p><br><b>Sumudu Prabha Atapattu</b><br>LL.B(Sri Lanka), Attorney-at-Law<br>Notary Public, Commissioner for Oaths <br>& Registered Company Secretary</p>
+
+                <p><br><b>Address : </b>No.275,Good Shead Road,Ratapura<br><b>Contact Number :</b> 0711567857<br><b>Fax : </b>0115756965
+
+                <p>Legal Information System<br>All Right Reserved<br>Owned By Sumudu Prabha Atapattu</p>
+
+
+
+</body>
+</html>
